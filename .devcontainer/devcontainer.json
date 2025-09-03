@@ -1,0 +1,42 @@
+{
+  "name": "elixir-phoenix-dev",
+  "dockerComposeFile": ["../compose.yml"],
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+  "features": {},
+  "updateRemoteUserUID": true,
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "JakeBecker.elixir-ls",
+        "ElixirLsp.elixir-ls-ex",
+        "pantajoe.vscode-elixir-credo",
+        "ms-azuretools.vscode-docker",
+        "EditorConfig.EditorConfig",
+        "eamodio.gitlens",
+        "usernamehw.errorlens",
+        "vivaxy.vscode-conventional-commits",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
+      ],
+      "settings": {
+        "files.trimTrailingWhitespace": true,
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "JakeBecker.elixir-ls",
+        "[elixir]": {
+          "editor.defaultFormatter": "JakeBecker.elixir-ls",
+          "editor.tabSize": 2
+        },
+        "elixirLS.dialyzerEnabled": false,
+        "elixirLS.fetchDeps": true,
+        "elixirLS.mixEnv": "dev",
+        "elixirLS.suggestSpecs": true,
+        "editor.rulers": [100]
+      }
+    }
+  },
+  "postCreateCommand": "chmod +x .devcontainer/post-create.sh && bash .devcontainer/post-create.sh",
+  "remoteUser": "vscode"
+}
+

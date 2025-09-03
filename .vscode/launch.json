@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "mix phx.server (dev)",
+      "type": "mix_task",
+      "request": "launch",
+      "task": "phx.server",
+      "env": {
+        "MIX_ENV": "dev"
+      },
+      "projectDir": "${workspaceFolder}"
+    },
+    {
+      "name": "mix test (watch)",
+      "type": "mix_task",
+      "request": "launch",
+      "task": "test",
+      "taskArgs": ["--listen-on-stdin"],
+      "projectDir": "${workspaceFolder}"
+    }
+  ]
+}
+

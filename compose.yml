@@ -1,0 +1,41 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    container_name: elixir_app
+    volumes:
+      - .:/workspace:cached
+      - mix-cache:/home/vscode/.mix
+      - hex-cache:/home/vscode/.hex
+      - node-cache:/home/vscode/.npm
+    environment:
+      - MIX_ENV=dev
+      - PHX_SERVER=true
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
+    depends_on:
+      - db
+    ports:
+      - "4000:4000"   # Phoenix
+    working_dir: /workspace
+    tty: true
+
+  db:
+    image: postgres:15
+    container_name: elixir_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - TZ=Asia/Tokyo
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+  mix-cache:
+  hex-cache:
+  node-cache:
+
