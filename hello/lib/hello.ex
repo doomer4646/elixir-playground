@@ -25,6 +25,8 @@ defmodule Hello do
     if age >= 20, do: {:ok, :adult}, else: {:ok, :minor}
   end
 
+  def validate_age(_), do: {:error, :invalid_id}
+
   # 例３：ユーザー検索っぽいもの
   def fetch_user(id) when is_integer(id) and id > 0 do
     if id == 42 do
