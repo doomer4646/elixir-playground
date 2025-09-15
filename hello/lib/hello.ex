@@ -59,4 +59,32 @@ defmodule Hello do
     list = list ++ ["ぶどう"]
     Enum.each(list, fn el -> IO.puts(el <> "を買う") end)
   end
+
+  # お題２：ユーザー情報（Tuple）
+
+  # ユーザーを {id, name, age} というタプルで表す
+  # 例: {1, "山村", 27}
+  # そこから名前だけを取り出して表示する
+  # 年齢を +1 した新しいタプルを作る
+  def odai2() do
+    user1 = {1, "山村", 27}
+    {id, name, age} = user1
+    IO.puts(name)
+
+    user2 = {id, name, age + 1}
+    {_, _, new_age} = user2
+    IO.puts(new_age)
+  end
+
+  # お題３：社員名簿（Map）
+  # Mapで社員の役職を表す
+  # %{"田中" => "課長", "佐藤" => "主任"}
+  # 新しく "山村" => "部長" を追加する
+  # "佐藤" の役職を "係長" に更新する
+  # 全員分を "名前: 役職" の形式で表示する
+  def odai3() do
+    yakushoku = %{"田中" => "課長", "佐藤" => "主任"}
+    new_yakushoku = Map.put(yakushoku, :山村, "部長")
+    IO.inspect(new_yakushoku)
+  end
 end
