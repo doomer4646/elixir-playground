@@ -87,4 +87,16 @@ defmodule Hello do
     new_yakushoku = Map.put(yakushoku, :山村, "部長")
     IO.inspect(new_yakushoku)
   end
+
+  # お題４：オプション（Keyword list）
+  # opts = [color: "red", size: "M", stock: 10] を作る
+  # Keyword.get/2 を使って size を取り出す
+  # stock を 9 に更新する
+  def odai4() do
+    opts = [color: "red", size: "M", stock: 10]
+    size = Keyword.get(opts, :size)
+    IO.puts(size)
+    new_opts = Keyword.put(opts, :stock, 9)
+    IO.inspect(new_opts)
+  end
 end
