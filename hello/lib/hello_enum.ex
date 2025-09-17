@@ -86,11 +86,21 @@ defmodule HelloEnum do
   # letters = ["a","a","b","b","b","a","c","c"]
   # 隣接する同値ごとにまとめる
   # 例: [["a","a"],["b","b","b"],["a"],["c","c"]]
+  def mondai_chunk_by() do
+    letters = ["a", "a", "b", "b", "b", "a", "c", "c"]
+    chunked = Enum.chunk_by(letters, & &1)
+    IO.inspect(chunked)
+  end
 
   # 9) uniq / uniq_by
   # users = [ %{id: 1, name: "A"}, %{id: 2, name: "B"}, %{id: 1, name: "A*"} ]
   # id が重複する要素を 最初の出現だけ残すリストにする（uniq_by(& &1.id) を使う）
   # 複合問題
+  def mondai_uniq_by() do
+    users = [%{id: 1, name: "A"}, %{id: 2, name: "B"}, %{id: 1, name: "A"}]
+    uniqued = Enum.uniq_by(users, & &1.id)
+    IO.inspect(uniqued)
+  end
 
   # 10) 文字列スコア
   # codes = ["AA-100", "B-9", "CCC-30", "A-5", "BB-50"]
@@ -102,6 +112,25 @@ defmodule HelloEnum do
   # ここは **「reduce で文字と数字を手作業で分ける」**か、
   # または入力を {letters, number} のタプル配列に前提変換してから解いてOK。
   # 例: [{ "AA", 100 }, {"B", 9}, ...] にしてから取り組む。
+  def mondai_string_score() do
+    codes = ["AA-100", "B-9", "CCC-30", "A-5", "BB-50"]
+
+    maps =
+      Enum.map(
+        codes,
+        fn x ->
+          split = String.split(x, "-")
+          str = Enum.at(split, 0)
+          {score, _} = Integer.parse(Enum.at(split, 1))
+          {str, score}
+        end
+      )
+
+    IO.inspect(maps)
+    score_maps = Enum.map(maps, fn a -> String.length(elem(a, 0)) * elem(a, 1) end)
+    scores = {Enum.min(score_maps), Enum.max(score_maps)}
+    IO.inspect(scores)
+  end
 
   # 11) 在庫チェック
   # items = [%{sku: "A", stock: 10}, %{sku: "B", stock: 0}, %{sku: "C", stock: 5}, %{sku: "B", stock: 3}]
