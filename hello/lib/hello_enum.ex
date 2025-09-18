@@ -137,6 +137,21 @@ defmodule HelloEnum do
   # sku 重複を uniq_by で 最初の出現を採用
   # 在庫が 1 以上の SKU が すべて存在するか all? で確認（true/false）
   # 在庫 0 のものが ひとつでもあるか any? で確認
+  def mondai_zaiko_check() do
+    items = [
+      %{sku: "A", stock: 10},
+      %{sku: "B", stock: 0},
+      %{sku: "C", stock: 5},
+      %{sku: "B", stock: 3}
+    ]
+
+    sku_items = Enum.uniq_by(items, & &1.sku)
+    IO.inspect(sku_items)
+    stocked_items = Enum.all?(sku_items, &(&1.stock > 0))
+    IO.inspect(stocked_items, label: "all items are stocked")
+    any_out_of_stock = Enum.any?(sku_items, &(&1.stock == 0))
+    IO.inspect(any_out_of_stock, label: "no stocked")
+  end
 
   # 12) グループ合計（chunk_every + reduce）
   # nums = [5, 4, 1, 2, 9, 3, 8] を 3 個ずつに分けて、各チャンクの合計を出す
