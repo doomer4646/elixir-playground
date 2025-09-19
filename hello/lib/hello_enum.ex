@@ -157,6 +157,16 @@ defmodule HelloEnum do
   # nums = [5, 4, 1, 2, 9, 3, 8] を 3 個ずつに分けて、各チャンクの合計を出す
   # 期待例: [[5,4,1],[2,9,3],[8]] → [10,14,8]
   # チャレンジ（任意）
+  def mondai_group_goukei() do
+    nums = [5, 4, 1, 2, 9, 3, 8]
+    total = Enum.chunk_every(nums, 3) |> Enum.map(&Enum.sum(&1))
+    IO.inspect(total)
+
+    nums
+    |> Enum.chunk_every(3)
+    |> Enum.map(fn chunk -> Enum.reduce(chunk, 0, &+/2) end)
+    |> IO.inspect(label: "chunk_and_reduce")
+  end
 
   # 13) ログ圧縮（run-length encoding 的）
   # data = ["A","A","A","B","B","C","C","C","C","A"]
