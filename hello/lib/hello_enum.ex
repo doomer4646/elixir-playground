@@ -172,6 +172,17 @@ defmodule HelloEnum do
   # data = ["A","A","A","B","B","C","C","C","C","A"]
   # chunk_by で連続要素をまとめ、map と reduce で
   # [{"A",3},{"B",2},{"C",4},{"A",1}] を作る
+  def mondai_log_asshuku() do
+    data = ["A", "A", "A", "B", "B", "C", "C", "C", "C", "A"]
+
+    data
+    |> Enum.chunk_by(& &1)
+    |> Enum.map(fn chunk ->
+      acc0 = {hd(chunk), 0}
+      Enum.reduce(chunk, acc0, fn _elem, {v, n} -> {v, n + 1} end)
+    end)
+    |> IO.inspect()
+  end
 
   # 14) 集計＆並べ替え
   # orders = [ {:a, 100}, {:b, 50}, {:a, 30}, {:c, 20}, {:b, 70} ]
