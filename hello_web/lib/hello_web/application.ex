@@ -10,6 +10,7 @@ defmodule HelloWeb.Application do
     children = [
       # Starts a worker by calling: HelloWeb.Worker.start_link(arg)
       # {HelloWeb.Worker, arg}
+      HelloWeb.Counter,
       {Bandit, plug: HelloWeb.Router, scheme: :http, port: 4000}
     ]
 
