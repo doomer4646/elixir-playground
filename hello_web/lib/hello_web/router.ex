@@ -1,6 +1,19 @@
 defmodule HelloWeb.Router do
   use Plug.Router
   import Plug.Conn
+
+  plug(:put_secret_key_base)
+
+  plug(Plug.Session,
+    store: :cookie,
+    key: "_hello_web_key",
+    signing_salt: "random_salt",
+    same_site: "Lax",
+    secure: false
+  )
+
+  plug(:fetch_session)
+
   plug(:match)
   plug(:dispatch)
 
@@ -14,7 +27,7 @@ defmodule HelloWeb.Router do
   end
 
   get "/counter" do
-    count = HelloWeb.Counter.get()
+    count = get_session(conn, :count) || 0
 
     html = """
     <!DOCTYPE html>
@@ -35,9 +48,10 @@ defmodule HelloWeb.Router do
   end
 
   post "/counter/increment" do
-    HelloWeb.Counter.increment()
+    value = (get_session(conn, :count) || 0) + 1
 
     conn
+    |> put_session(:count, value)
     |> put_resp_header(
       "location",
       "/counter"
@@ -46,14 +60,22 @@ defmodule HelloWeb.Router do
   end
 
   post "/counter/reset" do
-    HelloWeb.Counter.reset()
-
     conn
+    |> put_session(:count, 0)
     |> put_resp_header("location", "/counter")
     |> send_resp(303, "")
   end
 
   match _ do
     send_resp(conn, 404, "not found")
+  end
+
+  # ここに追加 ↓
+  defp put_secret_key_base(conn, _opts) do
+    secret =
+      System.get_env("SECRET_KEY_BASE") ||
+        "dev-secret-key-base-should-be-long-and-random-at-least-64-bytes................"
+
+    %{conn | secret_key_base: secret}
   end
 end
